@@ -10,8 +10,8 @@ class AttackSkill {
   }
 }
 
-// Pokemon class to represent a Ninja Turtle (Pokemon equivalent)
-class Pokemon {
+// Turtle class to represent a Ninja Turtle
+class Turtle {
   constructor(name, health, magic) {
     this.name = name; // Name of the Ninja Turtle
     this.health = health; // Health points of the Ninja Turtle
@@ -94,10 +94,10 @@ class Pokemon {
 }
 
 // Create Ninja Turtle instances
-let michelangelo = new Pokemon("Michelangelo", 120, 80);
-let donatello = new Pokemon("Donatello", 95, 105);
-let raphael = new Pokemon("Raphael", 110, 100);
-let leonardo = new Pokemon("Leonardo", 130, 90);
+let michelangelo = new Turtle("Michelangelo", 120, 80);
+let donatello = new Turtle("Donatello", 95, 105);
+let raphael = new Turtle("Raphael", 110, 100);
+let leonardo = new Turtle("Leonardo", 130, 90);
 
 // Create attack skills
 let nunchakuStrike = new AttackSkill("Nunchaku Strike", 40, 30);
