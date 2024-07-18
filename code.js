@@ -1,5 +1,7 @@
-// Required to use readlineSync for interactive command-line input
 const readlineSync = require("readline-sync");
+const emoji = require("node-emoji");
+const chalk = require("chalk");
+const player = require("play-sound")();
 
 // AttackSkill class to represent an attack move
 class AttackSkill {
@@ -27,9 +29,15 @@ class Turtle {
 
   // Method to show the current status of the Ninja Turtle
   showStatus() {
-    console.log(`${this.name} - Health: ${this.health}, Magic: ${this.magic}`);
+    console.log(
+      chalk.blue(
+        `${this.name} - Health 💚: ${this.health}, Magic 💥: ${this.magic}`
+      )
+    );
     if (this.counter > 3) {
-      console.log(`${this.name} has won the battle!`);
+      console.log(
+        chalk.cyan(`${this.name} has won the battle! 🏆 ${emoji.get("trophy")}`)
+      );
     }
   }
 
@@ -37,14 +45,26 @@ class Turtle {
   getMagics() {
     const magicIncrease = Math.floor(Math.random() * 21); // Generates a random number between 0 and 20
     this.magic += magicIncrease;
-    console.log(`${this.name} gained ${magicIncrease} magic points!`);
+    console.log(
+      chalk.green(
+        `${this.name} gained ${magicIncrease} magic points! 🎉 ${emoji.get(
+          "trophy"
+        )}`
+      )
+    );
   }
 
   // Method to check if the Ninja Turtle has enough magic to perform an attack
   hasEnoughMagic(skillName) {
     const skill = this.skills.find((skill) => skill.attack === skillName);
     if (!skill) {
-      console.log(`${this.name} doesn't know the attack ${skillName}`);
+      console.log(
+        chalk.red(
+          `${this.name} doesn't know the attack ${skillName} ${emoji.get(
+            "trophy"
+          )}`
+        )
+      );
       return false;
     }
     return this.magic >= skill.magic;
@@ -55,26 +75,56 @@ class Turtle {
     return this.health > 0;
   }
 
+  // Method to play sound (dummy implementation)
+  playSound(filePath) {
+    // This is a placeholder method for playing sound
+    console.log(chalk.yellow(`Playing sound: ${filePath}`));
+  }
+
   // Method to perform an attack on another Ninja Turtle
   attack(skillName, opponent) {
     if (!this.isAlive()) {
-      console.log(`${this.name} is already defeated and cannot attack.`);
+      console.log(
+        chalk.red(
+          `${this.name} is already defeated and cannot attack. ${emoji.get(
+            "trophy"
+          )}`
+        )
+      );
       return;
     }
 
     if (!opponent.isAlive()) {
-      console.log(`${opponent.name} is already defeated.`);
+      console.log(
+        chalk.red(
+          `${opponent.name} is already defeated. ${emoji.get("trophy")}`
+        )
+      );
       return;
     }
 
     const skill = this.skills.find((skill) => skill.attack === skillName);
     if (!skill) {
-      console.log(`${this.name} doesn't know the attack ${skillName}`);
+      console.log(
+        chalk.red(
+          `${this.name} doesn't know the attack ${skillName}. ${emoji.get(
+            "trophy"
+          )}`
+        )
+      );
       return;
     }
 
     if (!this.hasEnoughMagic(skillName)) {
-      console.log(`${this.name} doesn't have enough magic to use ${skillName}`);
+      console.log(
+        chalk.red(
+          `${
+            this.name
+          } doesn't have enough magic to use ${skillName}. ${emoji.get(
+            "trophy"
+          )}`
+        )
+      );
       return;
     }
 
@@ -83,8 +133,13 @@ class Turtle {
     opponent.health -= skill.damage;
     this.counter += 1;
 
+    // Simulate playing sound on attack
+    this.playSound("path/to/attack-sound.mp3");
+
     console.log(
-      `${this.name} uses ${skillName} on ${opponent.name} causing ${skill.damage} damage!`
+      chalk.yellow(
+        `${this.name} uses ${skillName} on ${opponent.name} causing ${skill.damage} damage! 🦄`
+      )
     );
 
     // Show status of both Ninja Turtles
@@ -94,10 +149,10 @@ class Turtle {
 }
 
 // Create Ninja Turtle instances
-let michelangelo = new Turtle("Michelangelo", 120, 80);
-let donatello = new Turtle("Donatello", 95, 105);
-let raphael = new Turtle("Raphael", 110, 100);
-let leonardo = new Turtle("Leonardo", 130, 90);
+let michelangelo = new Turtle("Michelangelo 🐢", 120, 80);
+let donatello = new Turtle("Donatello 🐢", 95, 105);
+let raphael = new Turtle("Raphael 🐢", 110, 100);
+let leonardo = new Turtle("Leonardo 🐢", 130, 90);
 
 // Create attack skills
 let nunchakuStrike = new AttackSkill("Nunchaku Strike", 40, 30);
@@ -120,7 +175,7 @@ function battle() {
     leonardo.isAlive()
   ) {
     const attackerName = readlineSync.question(
-      "Who is attacking? (Michelangelo, Donatello, Raphael, Leonardo): "
+      "Who is attacking? (Michelangelo 🐢, Donatello 🐢, Raphael 🐢, Leonardo 🐢): "
     );
     const skillName = readlineSync.question("Which skill to use? ");
 
@@ -140,12 +195,12 @@ function battle() {
         attacker = leonardo;
         break;
       default:
-        console.log("Invalid attacker name.");
+        console.log(chalk.red("Invalid attacker name"));
         continue;
     }
 
     const opponentName = readlineSync.question(
-      "Who is the opponent? (Michelangelo, Donatello, Raphael, Leonardo): "
+      "Who is the opponent? (Michelangelo 🐢, Donatello 🐢, Raphael 🐢, Leonardo 🐢): "
     );
 
     switch (opponentName.toLowerCase()) {
@@ -162,7 +217,7 @@ function battle() {
         opponent = leonardo;
         break;
       default:
-        console.log("Invalid opponent name.");
+        console.log(chalk.red("Invalid opponent name."));
         continue;
     }
 
@@ -177,7 +232,7 @@ function battle() {
       !raphael.isAlive() ||
       !leonardo.isAlive()
     ) {
-      console.log("Game over!");
+      console.log(chalk.magenta("Game over!"));
       break;
     }
 
