@@ -231,6 +231,7 @@ function battle() {
       !donatello.isAlive() ||
       !raphael.isAlive() ||
       !leonardo.isAlive()
+      //line checks if Michelangelo is not alive, and if he is not, //it makes the overall condition true.
     ) {
       console.log(chalk.magenta("Game over!"));
       break;
@@ -241,6 +242,8 @@ function battle() {
     donatello.getMagics();
     raphael.getMagics();
     leonardo.getMagics();
+    // means that the loop will continue to execute as long as all four turtles are alive.
+    // The loop will stop running as soon as any one of the turtles is not alive.
   }
 }
 
