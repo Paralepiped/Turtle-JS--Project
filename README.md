@@ -1,92 +1,84 @@
-# _&$ Turtle-JS-Project &$_
+# Ninja Turtles Battle Simulator
 
-# _&$ Ninja Turtles Battle Simulation &$_
+## Overview
 
-**\***npm install readline-sync colors chalk play-sound node-emoji
+This Node.js application simulates a battle between four Ninja Turtles: Michelangelo, Donatello, Raphael, and Leonardo. Each turtle has unique attack skills and attributes, engaging in turn-based combat until only one remains standing.
 
-## & Overview &
+## Characters and Skills
 
-This project simulates a battle between the Ninja Turtles using JavaScript classes and methods. Each turtle can learn attack skills and use them to battle other turtles. The simulation includes health, magic, and skill management.
+### Michelangelo ����
 
-## & Features &
+- Health: 120
+- Magic: 80
+- Skills:
+- Nunchaku Strike:
 
-- Create Ninja Turtles with health and magic attributes.
-- Define attack skills with specific damage and magic cost.
-- Turtles can learn and use attack skills.
-- Turtles take turns attacking each other.
-- The battle continues until a turtle wins by attacking successfully more than three times.
+* Deals 40 damage
+* requires 30 magic
 
-## & Classes &
+### Donatello ����
 
-### NinjaTurtle
+- Health: 95
+- Magic: 105
+- Skills:
+- Bo Staff Hit:
 
-Represents a Ninja Turtle with the following properties:
+* Deals 35 damage
+* requires 25 magic
 
-- `name`: A string that represents the name of the turtle.
-- `health`: A number that represents the health of the turtle.
-- `magic`: A number that represents the magic of the turtle.
-- `skills`: An array that holds the attack skills of the turtle. It starts as an empty array.
-- `counter`: A number that starts at 0 and increments every time the turtle launches a successful attack.
+### Raphael ����
 
-#### Methods
+- Health: 110
+- Magic: 100
+- Skills:
+- Sai Stab:
 
-- `learnAttackSkill(newSkill)`: Adds a new attack skill to the skills array.
-- `showStatus()`: Logs the current health and magic of the turtle, and whether it has won the battle.
-- `getMagics()`: Increases the turtle's magic by a random number between 0 and 20.
-- `hasEnoughMagic(skillName)`: Checks if the turtle has enough magic to perform an attack skill.
-- `isAlive()`: Checks if the turtle is alive by checking if its health is greater than 0.
-- `attack(skillName, opponent)`: Simulates an attack from the turtle to an opponent turtle.
+* Deals 45 damage
+* requires 35 magic
 
-### & AttackSkill &
+### Leonardo ����
 
-Represents an attack skill with the following properties:
+- Health: 130
+- Magic: 90
+- Skills:
+- Katana Slash:
 
-- `attack`: A string that represents the name of the attack.
-- `damage`: A number that represents the damage caused by the attack.
-- `magic`: A number that represents the magic cost of the attack.
+* Deals 50 damage
+* requires 40 magic
 
-## & Instructions &
+## More explanations:
 
-### & Step 1: Setup &
+- constructor(name, health, magic): Initializes a turtle with name, health, magic, and initializes an empty skills array.
+- learnAttackSkill(newSkill): Adds a new attack skill to the turtle's skills array.
+- showStatus(): Displays the current health and magic of the turtle.
+- getMagics(): Increases the turtle's magic points randomly.
+- hasEnoughMagic(skillName): Checks if the turtle has enough magic to perform a specific attack.
+- isAlive(): Checks if the turtle is still alive.
+- playSound(filePath): Dummy method to simulate playing a sound on attack.
+- attack(skillName, opponent): Performs an attack on the opponent using a specified skill.
+- AttackSkill Class
 
-Make sure you have a JavaScript runtime environment such as Node.js installed.
+* constructor(attack, damage, magic): Initializes an attack skill with name, damage, and magic points required.
+* Usage
+* Setup
 
-### & Step 2: Create Classes &
+- Ensure Node.js is installed.
+- Install necessary modules using npm install readline-sync colors.
+- Execution
 
-Create the `NinjaTurtle` and `AttackSkill` classes based on the properties and methods described above.
+1. Run the program using node code.js.
+2. Follow the prompts to select attackers, skills, and opponents until the game concludes.
 
-### & Step 3: Instantiate Ninja Turtles &
+### Notes
 
-Create instances of the `NinjaTurtle` class for each of the four turtles:
+- The battle continues until only one Ninja Turtle remains alive.
+- Magic points replenish randomly throughout the battle.
+- Each Ninja Turtle can use their unique skills to strategically defeat opponents.
 
-```javascript
-let michelangelo = new NinjaTurtle("Michelangelo", 120, 80);
-let donatello = new NinjaTurtle("Donatello", 95, 105);
-let raphael = new NinjaTurtle("Raphael", 110, 90);
-let leonardo = new NinjaTurtle("Leonardo", 100, 100);
-& Step 4: Define Attack Skills &
-Create instances of the AttackSkill class for each of the attack skills:
+##Credits
+Developer: [Martrin Hristov]
+Version: 1.0.0
+Ausblenden
 
-javascript
-Copy code
-let nunchakuStrike = new AttackSkill("Nunchaku Strike", 40, 30);
-let boStaffHit = new AttackSkill("Bo Staff Hit", 35, 25);
-let saiStab = new AttackSkill("Sai Stab", 45, 35);
-let katanaSlash = new AttackSkill("Katana Slash", 50, 40);
-& Step 5: Teach Skills to Turtles &
-Teach the attack skills to each of the Ninja Turtles:
 
-javascript
-Copy code
-michelangelo.learnAttackSkill(nunchakuStrike);
-donatello.learnAttackSkill(boStaffHit);
-raphael.learnAttackSkill(saiStab);
-leonardo.learnAttackSkill(katanaSlash);
-& Step 6: Simulate the Battle &
-Create a function to simulate the battle. This function will loop until only one turtle is left standing:
 
-// Start the battle simulation
-battle();
-& Running the Simulation &
-To start the battle, run the script using Node.js:
-```

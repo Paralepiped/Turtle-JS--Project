@@ -1,7 +1,26 @@
 const readlineSync = require("readline-sync");
 const emoji = require("node-emoji");
-const chalk = require("chalk");
-const player = require("play-sound")();
+const colors = require("colors"); // Module for colored output in the console
+
+/*
+
+// Helper function to create rainbow text using chalk
+function rainbowText(text) {
+  const colors = [
+    chalk.red,
+    chalk.yellow,
+    chalk.green,
+    chalk.cyan,
+    chalk.blue,
+    chalk.magenta,
+  ];
+  let result = '';
+  for (let i = 0; i < text.length; i++) {
+    result += colors[i % colors.length](text[i]);
+  }
+  return result;
+}
+  */
 
 // AttackSkill class to represent an attack move
 class AttackSkill {
@@ -30,13 +49,14 @@ class Turtle {
   // Method to show the current status of the Ninja Turtle
   showStatus() {
     console.log(
-      chalk.blue(
-        `${this.name} - Health 💚: ${this.health}, Magic 💥: ${this.magic}`
-      )
+        `${this.name.blue} - Health 💚: ${this.health}, Magic 💥: ${this.magic}`
+    
     );
     if (this.counter > 3) {
       console.log(
-        chalk.cyan(`${this.name} has won the battle! 🏆 ${emoji.get("trophy")}`)
+        colors.cyan(
+          `${this.name} has won the battle! 🏆 ${emoji.get("trophy")}`
+        )
       );
     }
   }
@@ -46,7 +66,7 @@ class Turtle {
     const magicIncrease = Math.floor(Math.random() * 21); // Generates a random number between 0 and 20
     this.magic += magicIncrease;
     console.log(
-      chalk.green(
+      colors.green(
         `${this.name} gained ${magicIncrease} magic points! 🎉 ${emoji.get(
           "trophy"
         )}`
@@ -59,7 +79,7 @@ class Turtle {
     const skill = this.skills.find((skill) => skill.attack === skillName);
     if (!skill) {
       console.log(
-        chalk.red(
+        colors.red(
           `${this.name} doesn't know the attack ${skillName} ${emoji.get(
             "trophy"
           )}`
@@ -75,17 +95,13 @@ class Turtle {
     return this.health > 0;
   }
 
-  // Method to play sound (dummy implementation)
-  playSound(filePath) {
-    // This is a placeholder method for playing sound
-    console.log(chalk.yellow(`Playing sound: ${filePath}`));
-  }
+
 
   // Method to perform an attack on another Ninja Turtle
   attack(skillName, opponent) {
     if (!this.isAlive()) {
       console.log(
-        chalk.red(
+        colors.red(
           `${this.name} is already defeated and cannot attack. ${emoji.get(
             "trophy"
           )}`
@@ -96,7 +112,7 @@ class Turtle {
 
     if (!opponent.isAlive()) {
       console.log(
-        chalk.red(
+        colors.red(
           `${opponent.name} is already defeated. ${emoji.get("trophy")}`
         )
       );
@@ -106,7 +122,7 @@ class Turtle {
     const skill = this.skills.find((skill) => skill.attack === skillName);
     if (!skill) {
       console.log(
-        chalk.red(
+        colors.red(
           `${this.name} doesn't know the attack ${skillName}. ${emoji.get(
             "trophy"
           )}`
@@ -117,7 +133,7 @@ class Turtle {
 
     if (!this.hasEnoughMagic(skillName)) {
       console.log(
-        chalk.red(
+        colors.red(
           `${
             this.name
           } doesn't have enough magic to use ${skillName}. ${emoji.get(
@@ -137,7 +153,7 @@ class Turtle {
     this.playSound("path/to/attack-sound.mp3");
 
     console.log(
-      chalk.yellow(
+      colors.yellow(
         `${this.name} uses ${skillName} on ${opponent.name} causing ${skill.damage} damage! 🦄`
       )
     );
@@ -149,10 +165,10 @@ class Turtle {
 }
 
 // Create Ninja Turtle instances
-let michelangelo = new Turtle("Michelangelo 🐢", 120, 80);
-let donatello = new Turtle("Donatello 🐢", 95, 105);
-let raphael = new Turtle("Raphael 🐢", 110, 100);
-let leonardo = new Turtle("Leonardo 🐢", 130, 90);
+let michelangelo = new Turtle("Michelangelo 🐢🟠", 120, 80);
+let donatello = new Turtle("Donatello 🐢🟣", 95, 105);
+let raphael = new Turtle("Raphael 🐢🔴", 110, 100);
+let leonardo = new Turtle("Leonardo 🐢🔵", 130, 90);
 
 // Create attack skills
 let nunchakuStrike = new AttackSkill("Nunchaku Strike", 40, 30);
@@ -175,7 +191,7 @@ function battle() {
     leonardo.isAlive()
   ) {
     const attackerName = readlineSync.question(
-      "Who is attacking? (Michelangelo 🐢, Donatello 🐢, Raphael 🐢, Leonardo 🐢): "
+      "Who is attacking?  (Michelangelo 🐢🟠, Donatello 🐢🟣, Raphael🐢🔴, Leonardo 🐢🔵):"
     );
     const skillName = readlineSync.question("Which skill to use? ");
 
@@ -195,12 +211,12 @@ function battle() {
         attacker = leonardo;
         break;
       default:
-        console.log(chalk.red("Invalid attacker name"));
+        console.log(colors.red("Invalid attacker name"));
         continue;
     }
 
     const opponentName = readlineSync.question(
-      "Who is the opponent? (Michelangelo 🐢, Donatello 🐢, Raphael 🐢, Leonardo 🐢): "
+      "Who is the opponent? (Michelangelo 🟠🐢, Donatello 🟣🐢, Raphael 🔴🐢, Leonardo🔵🐢): "
     );
 
     switch (opponentName.toLowerCase()) {
@@ -217,7 +233,7 @@ function battle() {
         opponent = leonardo;
         break;
       default:
-        console.log(chalk.red("Invalid opponent name."));
+        console.log(colors.red("Invalid opponent name."));
         continue;
     }
 
@@ -233,7 +249,7 @@ function battle() {
       !leonardo.isAlive()
       //line checks if Michelangelo is not alive, and if he is not, //it makes the overall condition true.
     ) {
-      console.log(chalk.magenta("Game over!"));
+      console.log(colors.magenta("Game over!"));
       break;
     }
 
